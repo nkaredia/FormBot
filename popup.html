@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            width: 350px;
+        }
+
+        header {
+            height: 50px;
+            background-color: dodgerblue;
+        }
+
+        .section {
+            height: 400px;
+        }
+
+        footer {
+            border-top: 1px solid dodgerblue;
+            height: 20px;
+        }
+
+        
+        .buttons {
+            height: 35px;
+            bottom: 25px;
+            position: absolute;
+        }
+
+        .button {
+            height: 35px;
+            width: 200px;
+            border: none;
+            background-color: dodgerblue;
+            font-size: 18px;
+            color: #333;
+            font-family: sans-serif;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .save-button {
+            height: inherit;
+            margin-left: -5px;
+            width: 79px;
+            border: 1px solid dodgerblue;
+            background-color: dodgerblue;
+            font-size: 18px;
+            color: #333;
+            font-family: sans-serif;
+            cursor: pointer;
+            
+        }
+
+            .save-button:hover {
+                background-color: #1873cc;
+            }
+
+        .fill-section {
+            height: 150px;
+            width: 100%;
+            border-bottom: 1px solid dodgerblue;
+        }
+
+        .read-section {
+            height: 150px;
+            width: 100%;
+        }
+
+        .hvr-grow {
+            transform: translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            backface-visibility: hidden;
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+
+            .hvr-grow:hover,
+            .hvr-grow:active {
+                transform: scale(1.1);
+            }
+
+        .input-name {
+            width: 250px;
+            border: 0.5px solid transparent;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .input-div {
+            border: 1px solid dodgerblue;
+            border-right: none;
+            height: 35px;
+            margin-top: 20px;
+            width: 329px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error {
+            border-color: red;
+        }
+
+            .error:focus {
+                outline: none;
+            }
+
+        textarea {
+            width: 80%;
+            outline: none;
+            border: 1px solid dodgerblue;
+            height: 100px;
+            margin-top: 10px;
+            margin-left: 10%;
+        }
+
+    </style>
+</head>
+<body>
+    <header></header>
+    <section class="section">
+        <section class="fill-section"></section>
+        <section class="read-section">
+            <button id="read-button" class="button hvr-grow" style="margin-left: 75px;">Read</button>
+            <textarea readonly></textarea>
+            <div class="input-div">
+                <input type="text" name="form-input-name" min="3" class="input-name" />
+                <button class="save-button">Save</button>
+            </div>
+        </section>
+    </section>
+    <script type="text/javascript" src="popup.js"></script>
+</body>
+</html>

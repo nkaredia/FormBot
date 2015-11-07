@@ -1,0 +1,31 @@
+﻿{
+  "manifest_version": 2,
+
+  "name": "FormBot",
+  "description": "Read form inputs from web page and stores it and fill all the inputs whenever you want.",
+  "version": "1.0",
+
+  "background": {
+    "page":  "background.html"
+  },
+  "content_scripts": [
+        {
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+            ],
+        "js": ["jquery.min.js","content.js"],
+        "run_at": "document_end"         // pay attention to this line
+        }
+    ],
+  "permissions": [
+    "background",
+    "activeTab",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}
