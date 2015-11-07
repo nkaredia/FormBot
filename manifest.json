@@ -26,6 +26,6 @@
     "https://*/*"
   ],
   "browser_action": {
-    "default_popup": "popddffup.html"
+    "default_popup": "popup.html"
   }
 }
