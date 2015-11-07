@@ -1,16 +1,24 @@
 ﻿/// <reference path="jquery.min.js" />
 /// <reference path="jsonml.js" />
+/// <reference path="jquery.min.js" />
 chrome.runtime.onMessage.addListener(
   function (request, sender, sr) {
       var ob = [];
+      var parser = new DOMParser();
       if (request.message == "read") {
           input = $(":input");
-          for (i = 0; i < input.length; i++) {
-              ob.push((input[i]));
-          }
-          console.log(input[1].localName);
-          console.log(input.toLocaleString());
 
+          console.log(input);
+          console.log(typeof (input[1]));
+          var st = $(input[1]).clone().wrap('<div/>').parent().html();
+          doc = parser.parseFromString(st, "text/xml");
+          console.log($.makeArray(doc));
+          console.log(parser.parseFromString(st, "text/xml"));
+          console.log(st);
+          var a = $.makeArray(input[1]);
+          
+          console.log(a[1]);
+          console.log(typeof($.makeArray(input[1])));
 
           //JsonML.fromHTML()
 
@@ -20,6 +28,10 @@ chrome.runtime.onMessage.addListener(
 
       return true;
   });
+
+function extractProp(obj) {
+
+}
 
 var printObj = function (obj) {
     var arr = [];
