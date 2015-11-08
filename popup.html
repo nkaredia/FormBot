@@ -45,7 +45,7 @@
 
         .save-button {
             height: inherit;
-            margin-left: -5px;
+            margin-left: 0px;
             width: 79px;
             border: 1px solid dodgerblue;
             background-color: dodgerblue;
@@ -53,7 +53,7 @@
             color: #333;
             font-family: sans-serif;
             cursor: pointer;
-            
+            position:absolute;
         }
 
             .save-button:hover {
@@ -111,13 +111,14 @@
                 outline: none;
             }
 
-        textarea {
+        .textarea {
             width: 80%;
             outline: none;
             border: 1px solid dodgerblue;
             height: 100px;
             margin-top: 10px;
             margin-left: 10%;
+            background-color: white;
         }
 
     </style>
@@ -128,7 +129,9 @@
         <section class="fill-section"></section>
         <section class="read-section">
             <button id="read-button" class="button hvr-grow" style="margin-left: 75px;">Read</button>
-            <textarea readonly></textarea>
+            <div class="textarea">
+                
+            </div>
             <div class="input-div">
                 <input type="text" name="form-input-name" min="3" class="input-name" />
                 <button class="save-button">Save</button>

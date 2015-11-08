@@ -16,7 +16,8 @@ function read() {
     res = {};
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response) {
-            console.log(JSON.parse(response))
+            console.log(response.res);
         });
     });
+    
 }

@@ -3,34 +3,37 @@
 /// <reference path="jquery.min.js" />
 chrome.runtime.onMessage.addListener(
   function (request, sender, sr) {
-      var ob = [];
-      var parser = new DOMParser();
       if (request.message == "read") {
           input = $(":input");
-
-          console.log(input);
-          console.log(typeof (input[1]));
-          var st = $(input[1]).clone().wrap('<div/>').parent().html();
-          doc = parser.parseFromString(st, "text/xml");
-          console.log($.makeArray(doc));
-          console.log(parser.parseFromString(st, "text/xml"));
-          console.log(st);
-          var a = $.makeArray(input[1]);
-          
-          console.log(a[1]);
-          console.log(typeof($.makeArray(input[1])));
-
-          //JsonML.fromHTML()
-
-          
+          var o = extractAllAttributes(input);
+          sr({ res: o });   
       }
-      
-
       return true;
   });
 
-function extractProp(obj) {
 
+function extractAllAttributes(o) {
+    var ar = {};
+    for (var i = 0; i < o.length; i++) {
+        // ar['type'] = o[i].type;
+        ar[i] = extractAttributes(o[i].attributes, o[i].type, o[i].value);
+    }
+    console.log(ar);
+    return ar;
+}
+
+function extractAttributes(o, type, value) {
+    var ar = {};
+    ar['type'] = type;
+    ar['value'] = value;
+    //console.log(o);
+    for (var i = 0; i < o.length; i++) {
+        //console.log(o[i].name);
+        //console.log('"' + o[i].value + '"');
+        ar[o[i].name] = o[i].value !== "" ? o[i].value : "";
+    }
+    // console.log(ar);
+    return ar;
 }
 
 var printObj = function (obj) {
