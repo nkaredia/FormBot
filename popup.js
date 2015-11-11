@@ -1,4 +1,8 @@
-﻿/// <reference path="jquery.min.js" />
+﻿/// <reference path="velocity.min.js" />
+/// <reference path="jquery.min.js" />
+var _ = false;
+var $elie = $("#arrow"), degree = 360, timer;
+
 var attributes;
 function readObject(e) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -26,3 +30,18 @@ function objectToView(o) {
     }
     return s;
 }
+
+
+var open = false, d = -180, h = 0;
+$("#arrow").click(function () {
+
+    d = open ? -180 : 0;
+    h = open ? 0 : 140;
+    $("#arrow").velocity({
+        rotateZ: d+"deg"
+    }, 500);
+    $("#console").velocity({
+        height: h + "px"
+    }, 500);
+    open = !open;
+});
