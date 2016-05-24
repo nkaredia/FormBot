@@ -1,0 +1,24 @@
+{
+  "name": "Form Bot",
+  "authors": [
+    "Noorsil Karedia <karedianoorsil@gmail.com>"
+  ],
+  "description": "Grab all inputs from web page and store it for later use.",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "select2": "^4.0.2",
+    "font-awesome": "Font-Awesome#^4.6.1",
+    "perfect-scrollbar": "^0.6.10"
+  }
+}

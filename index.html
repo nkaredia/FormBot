@@ -1,143 +1,103 @@
-﻿<!DOCTYPE html>
+<!Doctype html>
 <html>
+
 <head>
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: whitesmoke;
-            width: 350px;
-        }
+    <title>Form Bot</title>
+    <link rel="stylesheet" type="text/css" href="css/Fonts/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="lib/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/perfect-scrollbar/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/select2/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <style type="text/css">
 
-        header {
-            height: 50px;
-            background-color: dodgerblue;
-        }
-
-        .section {
-            height: 400px;
-        }
-
-        footer {
-            border-top: 1px solid dodgerblue;
-            height: 20px;
-        }
-
-        .buttons {
-            height: 35px;
-            bottom: 25px;
-            position: absolute;
-        }
-
-        .button {
-            height: 35px;
-            width: 200px;
-            border: none;
-            background-color: dodgerblue;
-            font-size: 18px;
-            color: #333;
-            font-family: sans-serif;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        .save-button {
-            height: 35px;
-            width: 80px;
-            border: 1px solid dodgerblue;
-            
-            background-color: dodgerblue;
-            font-size: 18px;
-            color: #333;
-            font-family: sans-serif;
-            cursor: pointer;
-            margin-left: -5px;
-        }
-
-            .save-button:hover {
-                background-color: #1873cc;
-            }
-
-        .fill-section {
-            height: 150px;
-            width: 100%;
-            border-bottom: 1px solid dodgerblue;
-        }
-
-        .read-section {
-            height: 150px;
-            width: 100%;
-        }
-
-        .hvr-grow {
-            transform: translateZ(0);
-            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-            backface-visibility: hidden;
-            transition-duration: 0.3s;
-            transition-property: transform;
-        }
-
-            .hvr-grow:hover,
-            .hvr-grow:focus,
-            .hvr-grow:active {
-                transform: scale(1.1);
-            }
-
-        .input-name {
-            width: 250px;
-            /*border: 1px solid dodgerblue;*/
-            border: none;
-            padding-top: 7px;
-            padding-bottom: 7px;
-            font-size: 17px;
-        }
-
-        .input-div{
-            border: 1px solid dodgerblue;
-            height: 35px;
-            margin-top: 20px;
-            width: 329px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .error {
-            border-color: red;
-        }
-
-            .error:focus {
-                outline: none;
-            }
-
-        textarea {
-            width: 80%;
-            outline: none;
-            border: 1px solid dodgerblue;
-            height: 100px;
-            margin-top: 10px;
-            margin-left: 10%;
-        }
     </style>
 </head>
+
 <body>
-    <header></header>
-    <section class="section">
-        <section class="fill-section"></section>
-        <section class="read-section">
-            <button id="read-button" class="button hvr-grow" style="margin-left: 75px;">Read</button>
-            <textarea readonly></textarea>
-            <div class="input-div">
-                <input type="text" name="form-input-name" min="3" class="input-name" />
-                <button class="save-button">Save</button>
+    <div class="container">
+        <div class="header">
+            <div class="brand">
+                <!--Form Bot-->
             </div>
-            
+            <div class="theme-container">
+                <div class="theme-button-container">
+                    <button class="theme-button red" theme_params="#f8ebe9-#c0392b-#df9c95-#ac3326"></button>
+                </div>
+                <div class="theme-button-container">
+                    <button class="theme-button purple" theme_params="#f3ecf6-#8e44ad-#c6a1d6-#7f3d9b"></button>
+                </div>
+                <div class="theme-button-container">
+                    <button class="theme-button green" theme_params="#e9f6ef-#27ae60-#93d6af-#239c56"></button>
+                </div>
+                <div class="theme-button-container">
+                    <button class="theme-button blue" theme_params="#e9f2f8-#2980b9-#94bfdc-#2473a6"></button>
+                </div>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="fill-container">
+                <div class="s-cont">
+                    <div class="select-container">
+                        <select class="select">
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                            <option value="">hello</option>
+                        </select>
+                    </div>
+                    <div class="fill-button-container">
+                        <button class="fill">Fill</button>
+                    </div>
+                </div>
+            </div>
+            <div class="read-container">
+                <div class="i-cont">
+                    <div class="input-container">
+                        <div class="text-input-container">
+                            <input class="read-text-input" type="text" name="name" value="">
+                        </div>
+                        <button class="read">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="buttons-container">
+                        <div class="save-container">
+                            <button class="save">Save</button>
+                        </div>
+                        <div class="discard-container">
+                            <button class="discard">Discard</button>
+                        </div>
+                    </div>
+                </div>
 
-        </section>
-    </section>
-
-    <script>
-
-    </script>
+            </div>
+        </div>
+        <div class="console-container">
+            <div class="head">
+                <div class="toggle-button">
+                    <div class="fa fa-angle-down"></div>
+                </div>
+            </div>
+            <div class="console">
+                <!--<table>
+                    <tr><td>cdf</td><td></td></tr>
+                    <tr><td></td><td>fdvd</td></tr>
+                    <tr><td>dfvfv</td><td></td></tr>
+                    <tr><td></td><td>dfvdf</td></tr>
+                </table>-->
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="src/popup.js"></script>
 </body>
+
 </html>
