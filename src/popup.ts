@@ -5,47 +5,12 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
+/// <reference path="./def.ts" />
 
-/* Perfect Scrollbar Definition */
-interface perfectScrollbarOptions {
-    wheelSpeed?: number;
-    wheelPropagation?: boolean;
-    swipePropagation?: boolean;
-    minScrollbarLength?: number | { null };
-    maxScrollbarLength?: number | { null };
-    useBothWheelAxes?: boolean;
-    useKeyboard?: boolean;
-    suppressScrollX?: boolean;
-    suppressScrollY?: boolean;
-    scrollXMarginOffset?: number;
-    scrollYMarginOffset?: number;
-    stopPropagationOnClick?: boolean;
-    useSelectionScroll?: boolean;
-}
-
-
-
-interface JQuery {
-    perfectScrollbar(): JQuery;
-    perfectScrollbar(options: perfectScrollbarOptions)
-    perfectScrollbar(option: string);
-
-}
-
-declare var perfectScrollbar;
-/* Perfect Scrollbar Definition */
-
+import {CONST} from "./def";
+import {message} from "./def";
 
 module FormBotApp {
-
-    const CONST: { NEW_DATA: number, SAVE_DATA: number } =
-        { NEW_DATA: 1, SAVE_DATA: 2 };
-    //var message: { message: string, data: { name: string, message: any } }
-
-
-
-
-
 
     export class FormBot {
 
@@ -94,7 +59,7 @@ module FormBotApp {
             $(".theme-button").bind("click", this.themeEvent);
 
             $(".read").bind("click", this.readEvent);
-            this.port.onMessage.addListener(function (message: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) {
+            this.port.onMessage.addListener(function (message: message) {
                 self.portOnMessage(message);
             })
             $(".toggle-button").bind("click", self.consoleToggleEvent);

@@ -5,10 +5,12 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
+"use strict";
 /* Perfect Scrollbar Definition */
+/* Perfect Scrollbar Definition */
+var def_1 = require("./def");
 var FormBotApp;
 (function (FormBotApp) {
-    var CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
     //var message: { message: string, data: { name: string, message: any } }
     var FormBot = (function () {
         function FormBot() {
@@ -75,7 +77,7 @@ var FormBotApp;
                 console.log(obj);
                 if (obj) {
                     if (obj.success) {
-                        if (obj.type == CONST.NEW_DATA) {
+                        if (obj.type == def_1.CONST.NEW_DATA) {
                             $(".console").html(obj.message);
                             $(".read").children("i").attr("class", _this.loader_old_class);
                             if (!$(".console").hasClass("console-height")) {

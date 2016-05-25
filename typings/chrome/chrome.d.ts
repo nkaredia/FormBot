@@ -5,12 +5,32 @@
 
 /// <reference path='../webrtc/MediaStream.d.ts'/>
 /// <reference path='../filesystem/filesystem.d.ts' />
+/// <reference path='../../src/def.ts' />
 
 ////////////////////
 // Global object
 ////////////////////
 interface Window {
     chrome: typeof chrome;
+}
+
+
+//////////////////
+// DEF 
+/////////////////
+//import {message} from "../../src/def";
+        
+//message: {success:boolean, message: string, type:any ,data: { name: string, message: any } }
+interface message{
+  success:boolean,
+  message: string,
+  type:any,
+  data: data  
+}
+
+interface data{
+  name: string,
+  message:any
 }
 
 ////////////////////
@@ -4944,7 +4964,8 @@ declare namespace chrome.runtime {
      * @since Chrome 26.
      */
     interface Port {
-        postMessage: (message: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) => void;
+		
+        postMessage: (message: message) => void;
         disconnect: () => void;
         /**
          * Optional.

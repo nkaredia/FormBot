@@ -5,9 +5,12 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
+"use strict";
+var def_1 = require("./def");
 var FormBotApp;
 (function (FormBotApp) {
-    var CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+    //const CONST: { NEW_DATA: number, SAVE_DATA: number } =
+    //    { NEW_DATA: 1, SAVE_DATA: 2 };
     var Background = (function () {
         function Background() {
             var _this = this;
@@ -35,7 +38,7 @@ var FormBotApp;
                                     self.response_data = response.message;
                                     var sendDom = self.makeDOM(response.message);
                                     //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
-                                    self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } });
+                                    self.port.postMessage({ success: true, message: sendDom, type: def_1.CONST.NEW_DATA, data: { name: "response", message: response } });
                                 }
                                 else {
                                     //self.port.postMessage({ success: false, message: response.message });

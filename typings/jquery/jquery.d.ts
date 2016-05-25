@@ -1161,10 +1161,39 @@ interface JQueryStatic {
     parseHTML(data: string, context?: Document, keepScripts?: boolean): any[];
 }
 
+interface perfectScrollbarOptions {
+    wheelSpeed?: number;
+    wheelPropagation?: boolean;
+    swipePropagation?: boolean;
+    minScrollbarLength?: number | { null };
+    maxScrollbarLength?: number | { null };
+    useBothWheelAxes?: boolean;
+    useKeyboard?: boolean;
+    suppressScrollX?: boolean;
+    suppressScrollY?: boolean;
+    scrollXMarginOffset?: number;
+    scrollYMarginOffset?: number;
+    stopPropagationOnClick?: boolean;
+    useSelectionScroll?: boolean;
+}
+
+
+
 /**
  * The jQuery instance members
  */
 interface JQuery {
+    
+    /**
+     * 
+     * Perfect Scrollbar
+     */
+    perfectScrollbar(): JQuery;
+    perfectScrollbar(options: perfectScrollbarOptions)
+    perfectScrollbar(option: string);
+    
+    
+    
     /**
      * Register a handler to be called when Ajax requests complete. This is an AjaxEvent.
      *
@@ -3208,3 +3237,4 @@ declare module "jquery" {
 }
 declare var jQuery: JQueryStatic;
 declare var $: JQueryStatic;
+

@@ -6,10 +6,12 @@
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
+import {CONST} from "./def";
+
 module FormBotApp {
 
-    const CONST: { NEW_DATA: number, SAVE_DATA: number } =
-        { NEW_DATA: 1, SAVE_DATA: 2 };
+    //const CONST: { NEW_DATA: number, SAVE_DATA: number } =
+    //    { NEW_DATA: 1, SAVE_DATA: 2 };
 
 
     export class Background {
