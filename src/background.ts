@@ -42,7 +42,7 @@ module FormBotApp {
 
         MessageListener = () => {
             var self = this;
-            this.port.onMessage.addListener(function (message: { message: string, data: { name: string, message: any } }) {
+            this.port.onMessage.addListener(function (message: { success: boolean, message: string, type: any, data: { name: string, message: any } }) {
                 if (message.message == "read") {
                     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: chrome.tabs.Tab[]) {
                         chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response: any) {
@@ -50,25 +50,33 @@ module FormBotApp {
                             if (response.success != false) {
                                 self.response_data = response.message;
                                 var sendDom = self.makeDOM(response.message);
-                                self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
+                                //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
+                                self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } })
                             }
                             else {
-                                self.port.postMessage({ success: false, message: response.message });
+                                //self.port.postMessage({ success: false, message: response.message });
+                                self.port.postMessage({ success: false, message: response.message, type: null, data: { name: "Error", message: response.message } });
                             }
                         });
                     })
                 }
                 else if (message.message == "save") {
-                    chrome.storage.local.get(function (items: any) {
-                        var _data = [];
-                        if (items.data != undefined) {
-                            _data = items.data;
-                        }
-                        console.log("save-message", message);
-                        _data.push({name: message.data.name, item: message.data.message});
-                        chrome.storage.local.set({ data: _data });
-                        self.port.postMessage({ success: true, message: message.data.name + " Saved" });
-                    });
+                    // chrome.storage.local.get(function (items: any) {
+                    //     var _data = [];
+                    //     if (items.data != undefined) {
+                    //         _data = items.data;
+                    //     }
+                    //     console.log("save-message", message);
+                    //     _data.push({name: message.data.name, item: message.data.message});
+                    //     chrome.storage.local.set({ data: _data });
+                    //     self.port.postMessage({ success: true, message: message.data.name + " Saved" });
+                    // });
+                    chrome.storage.local.get(function (items: { ColorStr: string, userData: [{ name: string, data: any }] }) {
+                        let data = items.userData ? items.userData : [];
+                        data.push({ name: message.data.name, data: message.data.message });
+                        chrome.storage.local.set({ userData: data });
+                    })
+
                 }
             });
         }

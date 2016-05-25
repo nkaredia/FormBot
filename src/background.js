@@ -34,24 +34,31 @@ var FormBotApp;
                                 if (response.success != false) {
                                     self.response_data = response.message;
                                     var sendDom = self.makeDOM(response.message);
-                                    self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
+                                    //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
+                                    self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } });
                                 }
                                 else {
-                                    self.port.postMessage({ success: false, message: response.message });
+                                    //self.port.postMessage({ success: false, message: response.message });
+                                    self.port.postMessage({ success: false, message: response.message, type: null, data: { name: "Error", message: response.message } });
                                 }
                             });
                         });
                     }
                     else if (message.message == "save") {
+                        // chrome.storage.local.get(function (items: any) {
+                        //     var _data = [];
+                        //     if (items.data != undefined) {
+                        //         _data = items.data;
+                        //     }
+                        //     console.log("save-message", message);
+                        //     _data.push({name: message.data.name, item: message.data.message});
+                        //     chrome.storage.local.set({ data: _data });
+                        //     self.port.postMessage({ success: true, message: message.data.name + " Saved" });
+                        // });
                         chrome.storage.local.get(function (items) {
-                            var _data = [];
-                            if (items.data != undefined) {
-                                _data = items.data;
-                            }
-                            console.log("save-message", message);
-                            _data.push(message.data);
-                            chrome.storage.local.set({ data: _data });
-                            self.port.postMessage({ success: true, message: message.data.name + " Saved" });
+                            var data = items.userData ? items.userData : [];
+                            data.push({ name: message.data.name, data: message.data.message });
+                            chrome.storage.local.set({ userData: data });
                         });
                     }
                 });

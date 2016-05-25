@@ -9,6 +9,7 @@
 var FormBotApp;
 (function (FormBotApp) {
     var CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+    //var message: { message: string, data: { name: string, message: any } }
     var FormBot = (function () {
         function FormBot() {
             var _this = this;
@@ -38,8 +39,8 @@ var FormBotApp;
                 $("span.select2-selection__arrow").bind("click", _this.select2Expand);
                 $(".theme-button").bind("click", _this.themeEvent);
                 $(".read").bind("click", _this.readEvent);
-                _this.port.onMessage.addListener(function (m) {
-                    self.portOnMessage(m);
+                _this.port.onMessage.addListener(function (message) {
+                    self.portOnMessage(message);
                 });
                 $(".toggle-button").bind("click", self.consoleToggleEvent);
                 $(".save").bind("click", self.saveEvent);
@@ -49,7 +50,8 @@ var FormBotApp;
                 console.log("save");
                 if ($(".read-text-input").val() != "") {
                     if (_this.__data != null) {
-                        _this.port.postMessage({ message: "save", data: _this.__data });
+                        // this.port.postMessage({ message: "save", data: this.__data });
+                        _this.port.postMessage({ success: true, message: "save", type: null, data: { name: $(".read-text-input").val(), message: _this.__data } });
                     }
                 }
             };
@@ -67,7 +69,7 @@ var FormBotApp;
                 $(el).children("i").attr("class", newClass);
                 //var  port = chrome.runtime.connect({name: "readPort"});
                 //port.postMessage("read");
-                _this.port.postMessage({ message: "read", data: [] });
+                _this.port.postMessage({ success: true, message: "read", type: null, data: { name: "", message: {} } });
             };
             this.portOnMessage = function (obj) {
                 console.log(obj);

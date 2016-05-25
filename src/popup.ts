@@ -40,6 +40,12 @@ module FormBotApp {
 
     const CONST: { NEW_DATA: number, SAVE_DATA: number } =
         { NEW_DATA: 1, SAVE_DATA: 2 };
+    //var message: { message: string, data: { name: string, message: any } }
+
+
+
+
+
 
     export class FormBot {
 
@@ -47,12 +53,14 @@ module FormBotApp {
         loader_old_class: string;
         __data: any;
 
+
+
+
         constructor() {
             this.Initialize();
             this.InitializeSelect2();
             this.BindEvents();
             this.__data = null;
-
         }
 
         Initialize = () => {
@@ -86,8 +94,8 @@ module FormBotApp {
             $(".theme-button").bind("click", this.themeEvent);
 
             $(".read").bind("click", this.readEvent);
-            this.port.onMessage.addListener(function (m) {
-                self.portOnMessage(m);
+            this.port.onMessage.addListener(function (message: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) {
+                self.portOnMessage(message);
             })
             $(".toggle-button").bind("click", self.consoleToggleEvent);
             $(".save").bind("click", self.saveEvent);
@@ -99,7 +107,8 @@ module FormBotApp {
             console.log("save");
             if ($(".read-text-input").val() != "") {
                 if (this.__data != null) {
-                    this.port.postMessage({ message: "save", data: this.__data });
+                    // this.port.postMessage({ message: "save", data: this.__data });
+                    this.port.postMessage({ success: true, message: "save", type: null, data: { name: $(".read-text-input").val(), message: this.__data } });
                 }
             }
 
@@ -124,11 +133,11 @@ module FormBotApp {
             $(el).children("i").attr("class", newClass);
             //var  port = chrome.runtime.connect({name: "readPort"});
             //port.postMessage("read");
-            this.port.postMessage({ message: "read", data: [] });
+            this.port.postMessage({ success: true, message: "read", type: null, data: { name: "", message: {} } });
 
         }
 
-        portOnMessage = (obj: any) => {
+        portOnMessage = (obj: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) => {
             console.log(obj);
             if (obj) {
                 if (obj.success) {

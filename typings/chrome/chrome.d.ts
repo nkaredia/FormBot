@@ -4944,7 +4944,7 @@ declare namespace chrome.runtime {
      * @since Chrome 26.
      */
     interface Port {
-        postMessage: (message: Object) => void;
+        postMessage: (message: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) => void;
         disconnect: () => void;
         /**
          * Optional.
