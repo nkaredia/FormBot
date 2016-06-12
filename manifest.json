@@ -9,6 +9,8 @@
                 "<all_urls>"
             ],
             "js": [
+                "lib/es6-module-loader.js",
+                "lib/system.js",
                 "lib/jquery/dist/jquery.min.js",
                 "src/content.js"
             ],
@@ -16,7 +18,7 @@
         }
     ],
     "background": {
-        "scripts" : ["lib/jquery/dist/jquery.min.js", "src/background.js"]
+        "scripts" : ["lib/es6-module-loader.js","lib/system.js","lib/jquery/dist/jquery.min.js", "src/background.js"]
     },
     "permissions": [
         "unlimitedStorage",

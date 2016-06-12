@@ -4,6 +4,7 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
+const CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
 var FormBotApp;
 (function (FormBotApp) {
     class Content {

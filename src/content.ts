@@ -6,6 +6,27 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
 
+const CONST: { NEW_DATA: number, SAVE_DATA: number } =
+        { NEW_DATA: 1, SAVE_DATA: 2 };
+        
+/**
+ * 
+ * Message Passing Object - Always use this definition for message passing
+ */
+export interface message{
+  success:boolean,
+  message: string,
+  type:any,
+  data: data  
+}
+
+interface data{
+  name: string,
+  message:any
+}
+
+
+
 module FormBotApp {
     export class Content {
         queryString: string = ":input:visible[type='text'],:input:visible[type='number'],:input:visible[type='checkbox'],:input:visible[type='radio'],:input:visible[type='date'],:input:visible[type='color'],:input:visible[type='range'],:input:visible[type='month'],:input:visible[type='week'],:input:visible[type='time'],:input:visible[type='datetime'],:input:visible[type='datetime-local'],:input:visible[type='email'],:input:visible[type='search'],:input:visible[type='tel'],:input:visible[type='url'],select:visible,textarea:visible";
