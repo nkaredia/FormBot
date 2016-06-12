@@ -1,7 +1,6 @@
 /// <reference path="../typings/select2/select2.d.ts"/>
 /// <reference path="../Typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/chrome/chrome.d.ts" />
-/// <reference path="../typings/es6-promise/es6-promise.d.ts" />
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
@@ -9,6 +8,7 @@
 
 import {CONST} from "./def";
 import {message} from "./def";
+
 
 module FormBotApp {
 

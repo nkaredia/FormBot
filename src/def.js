@@ -1,2 +1,2 @@
-"use strict";
-exports.CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+export const CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+//# sourceMappingURL=def.js.map
