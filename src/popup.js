@@ -6,8 +6,6 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 /// <reference path="./def.ts" />
 const CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
-// import {CONST} from "./def";
-// import {message} from "./def";
 var FormBotApp;
 (function (FormBotApp) {
     class FormBot {

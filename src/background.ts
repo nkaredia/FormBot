@@ -7,7 +7,7 @@
 
 
 const CONST: { NEW_DATA: number, SAVE_DATA: number } =
-        { NEW_DATA: 1, SAVE_DATA: 2 };
+             { NEW_DATA: 1, SAVE_DATA: 2 };
         
 /**
  * 
@@ -50,18 +50,22 @@ module FormBotApp {
 
         BindEvents = () => {
             var self = this;
-            chrome.runtime.onConnect.addListener(function (port: chrome.runtime.Port) {
-                self.port = port;
-                self.connected = true;
-                self.MessageListener();
-                port.onDisconnect.addListener(function () {
-                    self.response_data = null;
-                    self.connected = false;
-                    self.port = null;
-                })
-            });
+            chrome.runtime.onConnect.addListener(self.Connect);
+        }
 
+        Connect = (port: chrome.runtime.Port) => {
+            var self = this;
+            self.port = port;
+            self.connected = true;
+            self.MessageListener();
+            port.onDisconnect.addListener(self.Disconnect);
+        }
 
+        Disconnect = () => {
+            var self = this;
+            self.response_data = null;
+            self.connected = false;
+            self.port = null;
         }
 
         MessageListener = () => {
@@ -85,22 +89,11 @@ module FormBotApp {
                     })
                 }
                 else if (message.message == "save") {
-                    // chrome.storage.local.get(function (items: any) {
-                    //     var _data = [];
-                    //     if (items.data != undefined) {
-                    //         _data = items.data;
-                    //     }
-                    //     console.log("save-message", message);
-                    //     _data.push({name: message.data.name, item: message.data.message});
-                    //     chrome.storage.local.set({ data: _data });
-                    //     self.port.postMessage({ success: true, message: message.data.name + " Saved" });
-                    // });
                     chrome.storage.local.get(function (items: { ColorStr: string, userData: [{ name: string, data: any }] }) {
                         let data = items.userData ? items.userData : [];
                         data.push({ name: message.data.name, data: message.data.message });
                         chrome.storage.local.set({ userData: data });
                     })
-
                 }
             });
         }

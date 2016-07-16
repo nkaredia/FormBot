@@ -14,16 +14,27 @@ var FormBotApp;
         constructor() {
             this.BindEvents = () => {
                 var self = this;
-                chrome.runtime.onConnect.addListener(function (port) {
-                    self.port = port;
-                    self.connected = true;
-                    self.MessageListener();
-                    port.onDisconnect.addListener(function () {
-                        self.response_data = null;
-                        self.connected = false;
-                        self.port = null;
-                    });
-                });
+                chrome.runtime.onConnect.addListener(self.Connect);
+                // function (port: chrome.runtime.Port) {
+                //                 // function () {
+                //                 //     self.response_data = null;
+                //                 //     self.connected = false;
+                //                 //     self.port = null;
+                //                 // }
+                //             }
+            };
+            this.Connect = (port) => {
+                var self = this;
+                self.port = port;
+                self.connected = true;
+                self.MessageListener();
+                port.onDisconnect.addListener(self.Disconnect);
+            };
+            this.Disconnect = () => {
+                var self = this;
+                self.response_data = null;
+                self.connected = false;
+                self.port = null;
             };
             this.MessageListener = () => {
                 var self = this;
