@@ -4,7 +4,7 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
-const CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+const CONST = { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
 // import {CONST} from "./def";
 var FormBotApp;
 (function (FormBotApp) {
@@ -15,13 +15,6 @@ var FormBotApp;
             this.BindEvents = () => {
                 var self = this;
                 chrome.runtime.onConnect.addListener(self.Connect);
-                // function (port: chrome.runtime.Port) {
-                //                 // function () {
-                //                 //     self.response_data = null;
-                //                 //     self.connected = false;
-                //                 //     self.port = null;
-                //                 // }
-                //             }
             };
             this.Connect = (port) => {
                 var self = this;
@@ -57,20 +50,11 @@ var FormBotApp;
                         });
                     }
                     else if (message.message == "save") {
-                        // chrome.storage.local.get(function (items: any) {
-                        //     var _data = [];
-                        //     if (items.data != undefined) {
-                        //         _data = items.data;
-                        //     }
-                        //     console.log("save-message", message);
-                        //     _data.push({name: message.data.name, item: message.data.message});
-                        //     chrome.storage.local.set({ data: _data });
-                        //     self.port.postMessage({ success: true, message: message.data.name + " Saved" });
-                        // });
                         chrome.storage.local.get(function (items) {
                             let data = items.userData ? items.userData : [];
                             data.push({ name: message.data.name, data: message.data.message });
                             chrome.storage.local.set({ userData: data });
+                            self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
                         });
                     }
                 });

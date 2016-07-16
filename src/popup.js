@@ -5,7 +5,7 @@
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 /// <reference path="./def.ts" />
-const CONST = { NEW_DATA: 1, SAVE_DATA: 2 };
+const CONST = { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
 var FormBotApp;
 (function (FormBotApp) {
     class FormBot {
@@ -79,6 +79,9 @@ var FormBotApp;
                                 this.consoleToggleEvent(null);
                             }
                             this.__data = obj;
+                        }
+                        else if (obj.type == CONST.SAVED_DATA) {
+                            console.log(obj.message);
                         }
                     }
                 }

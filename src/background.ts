@@ -6,25 +6,34 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
 
-const CONST: { NEW_DATA: number, SAVE_DATA: number } =
-             { NEW_DATA: 1, SAVE_DATA: 2 };
-        
+const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
+        { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
+
 /**
  * 
  * Message Passing Object - Always use this definition for message passing
  */
-export interface message{
-  success:boolean,
-  message: string,
-  type:any,
-  data: data  
+export interface message {
+    success: boolean,
+    message: string,
+    type: any,
+    data: data
 }
 
-interface data{
-  name: string,
-  message:any
+interface data {
+    name: string,
+    message: any
 }
 
+interface localStorage {
+    ColorStr: string,
+    userData: [
+        {
+            name: string,
+            data: any
+        }
+    ]
+}
 
 
 // import {CONST} from "./def";
@@ -70,7 +79,7 @@ module FormBotApp {
 
         MessageListener = () => {
             var self = this;
-            this.port.onMessage.addListener(function (message: { success: boolean, message: string, type: any, data: { name: string, message: any } }) {
+            this.port.onMessage.addListener(function (message: message) {
                 if (message.message == "read") {
                     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: chrome.tabs.Tab[]) {
                         chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response: any) {
@@ -89,10 +98,11 @@ module FormBotApp {
                     })
                 }
                 else if (message.message == "save") {
-                    chrome.storage.local.get(function (items: { ColorStr: string, userData: [{ name: string, data: any }] }) {
+                    chrome.storage.local.get(function (items: localStorage) {
                         let data = items.userData ? items.userData : [];
                         data.push({ name: message.data.name, data: message.data.message });
                         chrome.storage.local.set({ userData: data });
+                        self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
                     })
                 }
             });

@@ -6,8 +6,8 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
 
-const CONST: { NEW_DATA: number, SAVE_DATA: number } =
-        { NEW_DATA: 1, SAVE_DATA: 2 };
+const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
+        { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
         
 /**
  * 
@@ -24,6 +24,17 @@ interface data{
   name: string,
   message:any
 }
+
+interface localStorage{
+     ColorStr: string, 
+     userData: [
+         { 
+             name: string, 
+             data: any 
+         }
+     ] 
+}
+
 
 
 
