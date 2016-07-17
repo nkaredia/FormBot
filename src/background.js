@@ -4,7 +4,13 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
-const CONST = { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
+var CONST;
+(function (CONST) {
+    CONST[CONST["NEW_DATA"] = 0] = "NEW_DATA";
+    CONST[CONST["SAVE_DATA"] = 1] = "SAVE_DATA";
+    CONST[CONST["SAVED_DATA"] = 2] = "SAVED_DATA";
+    CONST[CONST["READ_DATA"] = 3] = "READ_DATA";
+})(CONST || (CONST = {}));
 // import {CONST} from "./def";
 var FormBotApp;
 (function (FormBotApp) {
@@ -32,7 +38,7 @@ var FormBotApp;
             this.MessageListener = () => {
                 var self = this;
                 this.port.onMessage.addListener(function (message) {
-                    if (message.message == "read") {
+                    if (message.type == CONST.READ_DATA) {
                         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                             chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response) {
                                 console.log(response);
@@ -49,7 +55,7 @@ var FormBotApp;
                             });
                         });
                     }
-                    else if (message.message == "save") {
+                    else if (message.type == CONST.SAVE_DATA) {
                         chrome.storage.local.get(function (items) {
                             let data = items.userData ? items.userData : [];
                             data.push({ name: message.data.name, data: message.data.message });

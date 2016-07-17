@@ -6,34 +6,40 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 /// <reference path="./def.ts" />
 
+enum CONST{
+    NEW_DATA,
+    SAVE_DATA,
+    SAVED_DATA,
+    READ_DATA
+}
 
-const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
-        { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
-        
+
 /**
  * 
  * Message Passing Object - Always use this definition for message passing
  */
-export interface message{
-  success:boolean,
-  message: string,
-  type:any,
-  data: data  
+export interface message {
+    success: boolean,
+    message: string,
+    type: CONST,
+    data: data
 }
 
-interface data{
-  name: string,
-  message:any
+
+
+interface data {
+    name: string,
+    message: any
 }
 
-interface localStorage{
-     ColorStr: string, 
-     userData: [
-         { 
-             name: string, 
-             data: any 
-         }
-     ] 
+interface localStorage {
+    ColorStr: string,
+    userData: [
+        {
+            name: string,
+            data: any
+        }
+    ]
 }
 
 
@@ -102,7 +108,7 @@ module FormBotApp {
             if ($(".read-text-input").val() != "") {
                 if (this.__data != null) {
                     // this.port.postMessage({ message: "save", data: this.__data });
-                    this.port.postMessage({ success: true, message: "save", type: null, data: { name: $(".read-text-input").val(), message: this.__data } });
+                    this.port.postMessage({ success: true, message: "save", type: CONST.SAVE_DATA, data: { name: $(".read-text-input").val(), message: this.__data } });
                 }
             }
 
@@ -127,11 +133,11 @@ module FormBotApp {
             $(el).children("i").attr("class", newClass);
             //var  port = chrome.runtime.connect({name: "readPort"});
             //port.postMessage("read");
-            this.port.postMessage({ success: true, message: "read", type: null, data: { name: "", message: {} } });
+            this.port.postMessage({ success: true, message: "read", type: CONST.READ_DATA, data: { name: "", message: {} } });
 
         }
 
-        portOnMessage = (obj: {success:boolean, message: string, type:any ,data: { name: string, message: any } }) => {
+        portOnMessage = (obj: message) => {
             console.log(obj);
             if (obj) {
                 if (obj.success) {
@@ -143,7 +149,7 @@ module FormBotApp {
                         }
                         this.__data = obj;
                     }
-                    else if(obj.type == CONST.SAVED_DATA){
+                    else if (obj.type == CONST.SAVED_DATA) {
                         console.log(obj.message);
                     }
                 }

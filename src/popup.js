@@ -5,7 +5,13 @@
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 /// <reference path="./def.ts" />
-const CONST = { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
+var CONST;
+(function (CONST) {
+    CONST[CONST["NEW_DATA"] = 0] = "NEW_DATA";
+    CONST[CONST["SAVE_DATA"] = 1] = "SAVE_DATA";
+    CONST[CONST["SAVED_DATA"] = 2] = "SAVED_DATA";
+    CONST[CONST["READ_DATA"] = 3] = "READ_DATA";
+})(CONST || (CONST = {}));
 var FormBotApp;
 (function (FormBotApp) {
     class FormBot {
@@ -48,7 +54,7 @@ var FormBotApp;
                 if ($(".read-text-input").val() != "") {
                     if (this.__data != null) {
                         // this.port.postMessage({ message: "save", data: this.__data });
-                        this.port.postMessage({ success: true, message: "save", type: null, data: { name: $(".read-text-input").val(), message: this.__data } });
+                        this.port.postMessage({ success: true, message: "save", type: CONST.SAVE_DATA, data: { name: $(".read-text-input").val(), message: this.__data } });
                     }
                 }
             };
@@ -66,7 +72,7 @@ var FormBotApp;
                 $(el).children("i").attr("class", newClass);
                 //var  port = chrome.runtime.connect({name: "readPort"});
                 //port.postMessage("read");
-                this.port.postMessage({ success: true, message: "read", type: null, data: { name: "", message: {} } });
+                this.port.postMessage({ success: true, message: "read", type: CONST.READ_DATA, data: { name: "", message: {} } });
             };
             this.portOnMessage = (obj) => {
                 console.log(obj);

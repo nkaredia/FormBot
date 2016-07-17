@@ -5,9 +5,13 @@
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
+enum CONST{
+    NEW_DATA,
+    SAVE_DATA,
+    SAVED_DATA,
+    READ_DATA
+}
 
-const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
-        { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
 
 /**
  * 
@@ -16,9 +20,11 @@ const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
 export interface message {
     success: boolean,
     message: string,
-    type: any,
+    type: CONST,
     data: data
 }
+
+
 
 interface data {
     name: string,
@@ -80,7 +86,7 @@ module FormBotApp {
         MessageListener = () => {
             var self = this;
             this.port.onMessage.addListener(function (message: message) {
-                if (message.message == "read") {
+                if (message.type == CONST.READ_DATA) {
                     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: chrome.tabs.Tab[]) {
                         chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response: any) {
                             console.log(response);
@@ -97,7 +103,7 @@ module FormBotApp {
                         });
                     })
                 }
-                else if (message.message == "save") {
+                else if (message.type == CONST.SAVE_DATA) {
                     chrome.storage.local.get(function (items: localStorage) {
                         let data = items.userData ? items.userData : [];
                         data.push({ name: message.data.name, data: message.data.message });

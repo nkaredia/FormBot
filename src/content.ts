@@ -6,35 +6,41 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 
 
-const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA } =
-        { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3 };
-        
+enum CONST{
+    NEW_DATA,
+    SAVE_DATA,
+    SAVED_DATA,
+    READ_DATA
+}
+
+
 /**
  * 
  * Message Passing Object - Always use this definition for message passing
  */
-export interface message{
-  success:boolean,
-  message: string,
-  type:any,
-  data: data  
+export interface message {
+    success: boolean,
+    message: string,
+    type: CONST,
+    data: data
 }
 
-interface data{
-  name: string,
-  message:any
+
+
+interface data {
+    name: string,
+    message: any
 }
 
-interface localStorage{
-     ColorStr: string, 
-     userData: [
-         { 
-             name: string, 
-             data: any 
-         }
-     ] 
+interface localStorage {
+    ColorStr: string,
+    userData: [
+        {
+            name: string,
+            data: any
+        }
+    ]
 }
-
 
 
 
