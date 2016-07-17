@@ -35,35 +35,48 @@ var FormBotApp;
                 self.connected = false;
                 self.port = null;
             };
-            this.MessageListener = () => {
+            this.tabsMessageCallback = (response) => {
                 var self = this;
-                this.port.onMessage.addListener(function (message) {
-                    if (message.type == CONST.READ_DATA) {
-                        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                            chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, function (response) {
-                                console.log(response);
-                                if (response.success != false) {
-                                    self.response_data = response.message;
-                                    var sendDom = self.makeDOM(response.message);
-                                    //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
-                                    self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } });
-                                }
-                                else {
-                                    //self.port.postMessage({ success: false, message: response.message });
-                                    self.port.postMessage({ success: false, message: response.message, type: null, data: { name: "Error", message: response.message } });
-                                }
-                            });
-                        });
-                    }
-                    else if (message.type == CONST.SAVE_DATA) {
-                        chrome.storage.local.get(function (items) {
-                            let data = items.userData ? items.userData : [];
-                            data.push({ name: message.data.name, data: message.data.message });
-                            chrome.storage.local.set({ userData: data });
-                            self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
-                        });
-                    }
+                console.log(response);
+                if (response.success != false) {
+                    self.response_data = response.message;
+                    var sendDom = self.makeDOM(response.message);
+                    //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
+                    self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } });
+                }
+                else {
+                    //self.port.postMessage({ success: false, message: response.message });
+                    self.port.postMessage({ success: false, message: response.message, type: null, data: { name: "Error", message: response.message } });
+                }
+            };
+            this.tabsQueryCallback = (tabs) => {
+                var self = this;
+                chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, self.tabsMessageCallback);
+            };
+            this.readData = (message) => {
+                var self = this;
+                chrome.tabs.query({ active: true, currentWindow: true }, self.tabsQueryCallback);
+            };
+            this.saveData = (message) => {
+                var self = this;
+                chrome.storage.local.get(function (items) {
+                    let data = items.userData ? items.userData : [];
+                    data.push({ name: message.data.name, data: message.data.message });
+                    chrome.storage.local.set({ userData: data });
+                    self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
                 });
+            };
+            this.onMessage = (message) => {
+                var self = this;
+                if (message.type == CONST.READ_DATA) {
+                    self.readData(message);
+                }
+                else if (message.type == CONST.SAVE_DATA) {
+                    self.saveData(message);
+                }
+            };
+            this.MessageListener = () => {
+                this.port.onMessage.addListener(onmessage);
             };
             this.BindEvents();
             this.connected = false;
