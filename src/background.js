@@ -4,6 +4,8 @@
 /// <reference path="../Typings/filesystem/filesystem.d.ts" />
 /// <reference path="../Typings/filewriter/filewriter.d.ts" />
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
+// const CONST: { NEW_DATA: number, SAVE_DATA: number, SAVED_DATA: number, READ_DATA: number } =
+//         { NEW_DATA: 1, SAVE_DATA: 2, SAVED_DATA: 3, READ_DATA:4 };
 var CONST;
 (function (CONST) {
     CONST[CONST["NEW_DATA"] = 0] = "NEW_DATA";
@@ -35,48 +37,43 @@ var FormBotApp;
                 self.connected = false;
                 self.port = null;
             };
-            this.tabsMessageCallback = (response) => {
+            this.tabsSendMessageCallback = (response) => {
                 var self = this;
                 console.log(response);
                 if (response.success != false) {
                     self.response_data = response.message;
                     var sendDom = self.makeDOM(response.message);
-                    //self.port.postMessage({ success: true, message: sendDom, data: response, type: CONST.NEW_DATA });
                     self.port.postMessage({ success: true, message: sendDom, type: CONST.NEW_DATA, data: { name: "response", message: response } });
                 }
                 else {
-                    //self.port.postMessage({ success: false, message: response.message });
                     self.port.postMessage({ success: false, message: response.message, type: null, data: { name: "Error", message: response.message } });
                 }
             };
             this.tabsQueryCallback = (tabs) => {
                 var self = this;
-                chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, self.tabsMessageCallback);
+                chrome.tabs.sendMessage(tabs[0].id, { message: "read" }, self.tabsSendMessageCallback);
             };
-            this.readData = (message) => {
+            this.localstorageCallback = (items, message) => {
                 var self = this;
-                chrome.tabs.query({ active: true, currentWindow: true }, self.tabsQueryCallback);
+                let data = items.userData ? items.userData : [];
+                data.push({ name: message.data.name, data: message.data.message });
+                chrome.storage.local.set({ userData: data });
+                self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
             };
-            this.saveData = (message) => {
-                var self = this;
-                chrome.storage.local.get(function (items) {
-                    let data = items.userData ? items.userData : [];
-                    data.push({ name: message.data.name, data: message.data.message });
-                    chrome.storage.local.set({ userData: data });
-                    self.port.postMessage({ success: true, message: "From Saved", type: CONST.SAVED_DATA, data: { name: null, message: null } });
-                });
-            };
-            this.onMessage = (message) => {
+            this.onMessageCallback = (message) => {
                 var self = this;
                 if (message.type == CONST.READ_DATA) {
-                    self.readData(message);
+                    chrome.tabs.query({ active: true, currentWindow: true }, self.tabsQueryCallback);
                 }
                 else if (message.type == CONST.SAVE_DATA) {
-                    self.saveData(message);
+                    chrome.storage.local.get(function (items) {
+                        self.localstorageCallback(items, message);
+                    });
                 }
             };
             this.MessageListener = () => {
-                this.port.onMessage.addListener(onmessage);
+                var self = this;
+                this.port.onMessage.addListener(self.onMessageCallback);
             };
             this.BindEvents();
             this.connected = false;

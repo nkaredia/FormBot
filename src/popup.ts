@@ -6,14 +6,13 @@
 /// <reference path="../Typings/webrtc/MediaStream.d.ts" />
 /// <reference path="./def.ts" />
 
-enum CONST{
+
+enum CONST {
     NEW_DATA,
     SAVE_DATA,
     SAVED_DATA,
     READ_DATA
 }
-
-
 /**
  * 
  * Message Passing Object - Always use this definition for message passing
@@ -25,21 +24,19 @@ export interface message {
     data: data
 }
 
-
-
-interface data {
-    name: string,
-    message: any
+interface data{
+  name: string,
+  message:any
 }
 
-interface localStorage {
-    ColorStr: string,
-    userData: [
-        {
-            name: string,
-            data: any
-        }
-    ]
+interface localStorage{
+     ColorStr: string, 
+     userData: [
+         { 
+             name: string, 
+             data: any 
+         }
+     ] 
 }
 
 
@@ -149,7 +146,7 @@ module FormBotApp {
                         }
                         this.__data = obj;
                     }
-                    else if (obj.type == CONST.SAVED_DATA) {
+                    else if(obj.type == CONST.SAVED_DATA){
                         console.log(obj.message);
                     }
                 }
